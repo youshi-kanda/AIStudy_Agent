@@ -53,6 +53,7 @@ export async function getStep(courseId: string, stepId: string): Promise<Step | 
 
         return {
             ...data,
+            id: stepId, // Ensure ID matches the filename/path, ignoring frontmatter mismatch
             content_md: content,
         } as Step;
     } catch (error) {
