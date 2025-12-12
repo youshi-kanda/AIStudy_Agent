@@ -7,7 +7,7 @@ import { AlertCircle, Check } from "lucide-react";
 
 interface QuizProps {
     data: QuizType;
-    onComplete: () => void;
+    onComplete: (correct: boolean) => void;
 }
 
 export function Quiz({ data, onComplete }: QuizProps) {
@@ -21,7 +21,7 @@ export function Quiz({ data, onComplete }: QuizProps) {
         setIsCorrect(correct);
         setSubmitted(true);
         if (correct) {
-            onComplete();
+            onComplete(true);
         }
     };
 

@@ -1,63 +1,97 @@
-import fs from 'fs';
-import path from 'path';
+import { supabase } from './supabase/client';
 import { Course, Step } from './types';
-import matter from 'gray-matter';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-
+// Fetch a single course and its step IDs
 export async function getCourse(courseId: string): Promise<Course | null> {
     try {
-        const filePath = path.join(DATA_DIR, 'courses', `${courseId}.json`);
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        const course = JSON.parse(fileContent) as Course;
-        // Ensure id matches filename just in case
-        return { ...course, id: courseId };
+        // 1. Fetch Course Details
+        const { data: course, error: courseError } = await supabase
+            .from('courses')
+            .select('*')
+            .eq('id', courseId)
+            .single();
+
+        if (courseError || !course) {
+            console.error(`Error loading course ${courseId}:`, courseError);
+            return null;
+        }
+
+        // 2. Fetch Step IDs for this course (ordered)
+        const { data: steps, error: stepsError } = await supabase
+            .from('steps')
+            .select('id')
+            .eq('course_id', courseId)
+            .order('order', { ascending: true });
+
+        if (stepsError) {
+            console.error(`Error loading steps for course ${courseId}:`, stepsError);
+            return null;
+        }
+
+        return {
+            ...course,
+            steps: steps.map(s => s.id),
+            total_steps: steps.length
+        } as Course;
+
     } catch (error) {
-        console.error(`Error loading course ${courseId}:`, error);
+        console.error(`Unexpected error loading course ${courseId}:`, error);
         return null;
     }
 }
 
+// Fetch all courses
 export async function getAllCourses(): Promise<Course[]> {
     try {
-        const coursesDir = path.join(DATA_DIR, 'courses');
-        const files = fs.readdirSync(coursesDir);
-        const courses = files
-            .filter((file) => file.endsWith('.json'))
-            .map((file) => {
-                const id = file.replace('.json', '');
-                const content = fs.readFileSync(path.join(coursesDir, file), 'utf8');
-                return { ...JSON.parse(content), id } as Course;
-            });
-        return courses;
+        const { data: courses, error } = await supabase
+            .from('courses')
+            .select('*');
+
+        if (error) {
+            console.error('Error loading courses:', error);
+            return [];
+        }
+
+        // Fetch steps for all courses to populate the steps array
+        // We can do this by fetching all steps and grouping, or N+1 queries.
+        // For SSG time, performance isn't critical. Let's do a simple loop for now or a join.
+        // Actually, let's just fetch all steps and map them.
+        const { data: allSteps } = await supabase.from('steps').select('id, course_id').order('order');
+
+        return courses.map(c => {
+            // Filter steps for this course
+            const courseSteps = allSteps?.filter(s => s.course_id === c.id).map(s => s.id) || [];
+            return {
+                ...c,
+                steps: courseSteps,
+                total_steps: courseSteps.length
+            };
+        }) as unknown as Course[];
+
     } catch (error) {
         console.error('Error loading courses:', error);
         return [];
     }
 }
 
+// Fetch a specific step
 export async function getStep(courseId: string, stepId: string): Promise<Step | null> {
     try {
-        // Note: The stepId in the URL might differ from the filename if we aren't careful.
-        // However, our course.json lists step IDs which correspond to filenames without extension?
-        // In course.json we have "01_what_is_api".
-        // Let's assume the argument passed IS the filename base.
+        const { data: step, error } = await supabase
+            .from('steps')
+            .select('*')
+            .eq('course_id', courseId)
+            .eq('id', stepId)
+            .single();
 
-        const filePath = path.join(DATA_DIR, 'steps', courseId, `${stepId}.md`);
-        if (!fs.existsSync(filePath)) {
+        if (error || !step) {
+            console.error(`Error loading step ${stepId} for course ${courseId}:`, error);
             return null;
         }
 
-        const fileContent = fs.readFileSync(filePath, 'utf8');
-        const { data, content } = matter(fileContent);
-
-        return {
-            ...data,
-            id: stepId, // Ensure ID matches the filename/path, ignoring frontmatter mismatch
-            content_md: content,
-        } as Step;
+        return step as Step;
     } catch (error) {
-        console.error(`Error loading step ${stepId} for course ${courseId}:`, error);
+        console.error(`Error loading step ${stepId}:`, error);
         return null;
     }
 }
