@@ -19,10 +19,12 @@ export function ChatWindow() {
     };
 
     useEffect(() => {
+        console.log("ChatWindow mounted");
         scrollToBottom();
     }, [messages]);
 
     const handleFormSubmit = async (e: React.FormEvent) => {
+        console.log("Form submitted");
         e.preventDefault();
         if (!input.trim()) return;
 
@@ -41,7 +43,7 @@ export function ChatWindow() {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={clsx(
-                    "fixed bottom-6 right-6 p-4 rounded-full shadow-lg transition-all z-50",
+                    "fixed bottom-6 right-6 p-4 rounded-full shadow-lg transition-all z-[9999]",
                     isOpen ? "bg-slate-800 text-slate-400 rotate-90" : "bg-blue-600 hover:bg-blue-500 text-white hover:scale-110"
                 )}
             >
@@ -51,7 +53,7 @@ export function ChatWindow() {
             {/* Chat Window */}
             <div
                 className={clsx(
-                    "fixed bottom-24 right-6 w-[400px] bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl flex flex-col transition-all z-50 overflow-hidden",
+                    "fixed bottom-24 right-6 w-[400px] bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl flex flex-col transition-all z-[9999] overflow-hidden",
                     isOpen
                         ? "opacity-100 translate-y-0 pointer-events-auto h-[600px]"
                         : "opacity-0 translate-y-10 pointer-events-none h-0"
