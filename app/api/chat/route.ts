@@ -4,6 +4,7 @@ import { streamText, tool } from "ai";
 import { z } from "zod";
 
 export const maxDuration = 30;
+export const runtime = 'edge'; // Required for Cloudflare Pages
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
