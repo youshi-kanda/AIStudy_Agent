@@ -1,0 +1,25 @@
+{
+    "id": "api-basics-agent",
+    "title": "API基礎（AIエージェント開発向け）",
+    "description": "AIエージェント開発に必須となるREST APIの基礎を、実践的なクイズを通して学びます。",
+    "total_steps": 10,
+    "level": "beginner",
+    "tags": [
+        "API",
+        "HTTP",
+        "JSON",
+        "AI Agent"
+    ],
+    "steps": [
+        "01_what_is_api",
+        "02_http_methods",
+        "03_json_structure",
+        "04_endpoint_url",
+        "05_status_codes",
+        "06_request_parameters",
+        "07_headers_auth",
+        "08_request_anatomy",
+        "09_response_anatomy",
+        "10_rate_limit_errors"
+    ]
+}
