@@ -20,9 +20,10 @@ export async function generateStaticParams() {
     return params;
 }
 
-export default async function StepPage({ params }: { params: { courseId: string; stepId: string } }) {
-    const step = await getStep(params.courseId, params.stepId);
-    const course = await getCourse(params.courseId);
+export default async function StepPage({ params }: { params: Promise<{ courseId: string; stepId: string }> }) {
+    const { courseId, stepId } = await params;
+    const step = await getStep(courseId, stepId);
+    const course = await getCourse(courseId);
 
     if (!step || !course) {
         notFound();

@@ -13,8 +13,9 @@ export async function generateStaticParams() {
 // Since we are using static generation for known paths if needed, or dynamic decoding
 // For now, simple server component.
 
-export default async function CoursePage({ params }: { params: { courseId: string } }) {
-    const course = await getCourse(params.courseId);
+export default async function CoursePage({ params }: { params: Promise<{ courseId: string }> }) {
+    const { courseId } = await params;
+    const course = await getCourse(courseId);
 
     if (!course) {
         notFound();
