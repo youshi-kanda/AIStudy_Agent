@@ -1,4 +1,5 @@
 import { getAllCourses } from "@/lib/data";
+export const runtime = 'edge';
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 

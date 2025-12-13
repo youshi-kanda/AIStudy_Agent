@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { getCourse, getStep, getAllCourses } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { StepContent } from "@/components/step/StepContent";

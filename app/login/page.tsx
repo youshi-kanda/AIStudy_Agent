@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { login, signup } from './actions'
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ message?: string, error?: string }> }) {
