@@ -1,8 +1,23 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { ChatWindow } from "@/components/chat/ChatWindow";
 import Header from "@/components/layout/Header";
 
-// ... (imports)
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-// ... (font definitions)
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "AI Study Agent",
+  description: "Learn AI interactively",
+};
 
 export default function RootLayout({
   children,
