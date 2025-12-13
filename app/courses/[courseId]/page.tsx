@@ -1,4 +1,4 @@
-export const runtime = 'edge';
+export const dynamicParams = false;
 import { getCourse, getStep, getAllCourses } from "@/lib/data";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle, Circle, PlayCircle } from "lucide-react";
