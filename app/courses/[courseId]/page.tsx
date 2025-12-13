@@ -1,18 +1,12 @@
-export const dynamicParams = false;
+export const runtime = 'edge';
 import { getCourse, getStep, getAllCourses } from "@/lib/data";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle, Circle, PlayCircle } from "lucide-react";
 import { notFound } from "next/navigation";
 
-export async function generateStaticParams() {
-    const courses = await getAllCourses();
-    return courses.map((course) => ({
-        courseId: course.id,
-    }));
-}
+// Removed generateStaticParams to avoid conflict with Edge Runtime
+// Now using SSR for this route
 
-// Since we are using static generation for known paths if needed, or dynamic decoding
-// For now, simple server component.
 
 export default async function CoursePage({ params }: { params: Promise<{ courseId: string }> }) {
     const { courseId } = await params;

@@ -1,25 +1,13 @@
-export const dynamicParams = false;
+export const runtime = 'edge';
 import { getCourse, getStep, getAllCourses } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { StepContent } from "@/components/step/StepContent";
 import Link from "next/link";
 import { X } from "lucide-react";
 
-export async function generateStaticParams() {
-    const courses = await getAllCourses();
-    const params = [];
+// Removed generateStaticParams to avoid conflict with Edge Runtime
+// Now using SSR for this route
 
-    for (const course of courses) {
-        for (const stepId of course.steps) {
-            params.push({
-                courseId: course.id,
-                stepId: stepId,
-            });
-        }
-    }
-
-    return params;
-}
 
 export default async function StepPage({ params }: { params: Promise<{ courseId: string; stepId: string }> }) {
     const { courseId, stepId } = await params;
