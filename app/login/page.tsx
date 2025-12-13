@@ -1,6 +1,7 @@
 import { login, signup } from './actions'
 
-export default function LoginPage({ searchParams }: { searchParams: { message?: string, error?: string } }) {
+export default async function LoginPage({ searchParams }: { searchParams: Promise<{ message?: string, error?: string }> }) {
+    const params = await searchParams;
     return (
         <div className="flex h-screen w-full flex-col items-center justify-center bg-slate-950 px-4">
             <div className="w-full max-w-sm space-y-8 rounded-lg border border-slate-800 bg-slate-900/50 p-8 shadow-xl backdrop-blur-sm">
@@ -45,9 +46,9 @@ export default function LoginPage({ searchParams }: { searchParams: { message?: 
                         </div>
                     </div>
 
-                    {(searchParams.message || searchParams.error) && (
-                        <div className={`p-3 rounded-md text-sm ${searchParams.error ? "bg-red-900/30 text-red-400 border border-red-900/50" : "bg-green-900/30 text-green-400 border border-green-900/50"}`}>
-                            {searchParams.error || searchParams.message}
+                    {(params.message || params.error) && (
+                        <div className={`p-3 rounded-md text-sm ${params.error ? "bg-red-900/30 text-red-400 border border-red-900/50" : "bg-green-900/30 text-green-400 border border-green-900/50"}`}>
+                            {params.error || params.message}
                         </div>
                     )}
 
