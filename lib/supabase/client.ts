@@ -10,5 +10,10 @@ if (!supabaseUrl || !supabaseKey) {
 // Fallback to dummy values to prevent module-level crash if env vars are missing
 export const supabase = createClient(
     supabaseUrl || 'https://placeholder.supabase.co',
-    supabaseKey || 'placeholder'
+    supabaseKey || 'placeholder',
+    {
+        auth: {
+            persistSession: typeof window !== 'undefined',
+        }
+    }
 );
