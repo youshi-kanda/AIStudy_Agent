@@ -6,14 +6,15 @@ import { LogOut, User } from "lucide-react";
 export default async function Header() {
     const supabase = await createClient();
 
-    let user = null;
-    try {
-        const { data } = await supabase.auth.getUser();
-        user = data.user;
-    } catch (error) {
-        console.error("Error fetching user in Header:", error);
-        // User remains null, app continues to render
-    }
+    // Temporarily disabled for debugging
+    // let user = null;
+    // try {
+    //     const { data } = await supabase.auth.getUser();
+    //     user = data.user;
+    // } catch (error) {
+    //     console.error("Error fetching user in Header:", error);
+    // }
+    const user = null;
 
     return (
         <header className="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
