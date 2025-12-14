@@ -4,7 +4,7 @@ import { logout } from "@/app/login/actions";
 import { LogOut, User } from "lucide-react";
 
 export default async function Header() {
-    const supabase = await createClient();
+    // const supabase = await createClient();
 
     // Temporarily disabled for debugging
     // let user = null;
@@ -14,7 +14,7 @@ export default async function Header() {
     // } catch (error) {
     //     console.error("Error fetching user in Header:", error);
     // }
-    const user = null;
+    const user: any = null;
 
     return (
         <header className="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
