@@ -40,7 +40,13 @@ export async function updateSession(request: NextRequest) {
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
-    await supabase.auth.getUser()
+    try {
+        await supabase.auth.getUser()
+    } catch (error) {
+        // If this fails (e.g. missing env vars in build phase or misconfiguration),
+        // we should not crash the entire app. Just proceed without refreshing session.
+        console.error("Middleware auth check failed:", error);
+    }
 
     return supabaseResponse
 }
