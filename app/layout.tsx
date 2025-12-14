@@ -1,22 +1,39 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+// import { ChatWindow } from "@/components/chat/ChatWindow";
+import Header from "@/components/layout/Header";
 
-export const metadata = {
-  title: "Debug Layout",
-  description: "Debugging",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "AI Study Agent",
+  description: "Learn AI interactively",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en">
-      <body className="bg-black text-white">
-        <div className="border border-red-500 p-4">
-          <h1 className="text-xs text-red-500">DEBUG LAYOUT ACTIVE</h1>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Header />
+        <main className="min-h-screen pt-16">
           {children}
-        </div>
+        </main>
+        {/* <ChatWindow /> */}
       </body>
     </html>
   );
