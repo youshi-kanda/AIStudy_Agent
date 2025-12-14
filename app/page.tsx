@@ -9,7 +9,8 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const courses = await getAllCourses();
+  // const courses = await getAllCourses();
+  const courses: any[] = [];
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12">
