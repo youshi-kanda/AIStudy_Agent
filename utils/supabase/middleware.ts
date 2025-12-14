@@ -8,9 +8,16 @@ export async function updateSession(request: NextRequest) {
 
     // Create local supabase client for middleware
     // We need to properly handle cookie setting for both request and response
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+        console.error("Missing Supabase environment variables in middleware!");
+    }
+
     const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        supabaseUrl || 'https://placeholder.supabase.co',
+        supabaseKey || 'placeholder',
         {
             cookies: {
                 getAll() {
