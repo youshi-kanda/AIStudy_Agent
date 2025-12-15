@@ -1,6 +1,6 @@
-import { createClient } from "@/utils/supabase/server";
+// import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { logout } from "@/app/login/actions";
+// import { logout } from "@/app/login/actions";
 import { LogOut, User } from "lucide-react";
 
 export default async function Header() {
@@ -32,12 +32,12 @@ export default async function Header() {
                             <div className="text-sm text-slate-400 hidden sm:block">
                                 {user.email}
                             </div>
-                            <form action={logout}>
+                            {/* <form action={logout}>
                                 <button className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors">
                                     <LogOut className="w-4 h-4" />
                                     <span className="hidden sm:inline">Sign out</span>
                                 </button>
-                            </form>
+                            </form> */}
                         </div>
                     ) : (
                         <Link
