@@ -1,4 +1,5 @@
 import { getAllCourses } from "@/lib/data";
+import { Course } from "@/lib/types";
 export const runtime = 'edge';
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default async function Home() {
   // const courses = await getAllCourses();
-  const courses: any[] = [];
+  const courses: Course[] = [];
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-12">
