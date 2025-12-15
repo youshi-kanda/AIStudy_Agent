@@ -1,4 +1,4 @@
-import { getAllCourses } from "@/lib/data";
+// import { getAllCourses } from "@/lib/data";
 import { Course } from "@/lib/types";
 export const runtime = 'edge';
 import Link from "next/link";
